@@ -1,0 +1,272 @@
+{
+  "version": "v2",
+  "generated_at": "2026-05-11T00:46:57",
+  "points": {
+    "attendance_pct": {
+      "label": "Attendance %",
+      "source": "FY 23-24 daily Y/N attendance",
+      "kind": "real",
+      "formula": "present_days / school_days * 100",
+      "unit": "%",
+      "missingness": "computed when \u22651 marked school day"
+    },
+    "recent_attendance_pct": {
+      "label": "Last 30-day attendance",
+      "source": "FY 23-24 daily Y/N (last 30 marked days)",
+      "kind": "real",
+      "formula": "rolling 30-day present / total",
+      "unit": "%"
+    },
+    "attendance_delta_30d": {
+      "label": "Attendance \u0394 (last 30d)",
+      "source": "FY 23-24 daily Y/N",
+      "kind": "derived",
+      "formula": "recent_30d - overall",
+      "unit": "pp"
+    },
+    "longest_absence_streak": {
+      "label": "Longest absence streak",
+      "source": "FY 23-24 daily Y/N",
+      "kind": "derived",
+      "formula": "max consecutive N days",
+      "unit": "days"
+    },
+    "repeated_absence_clusters": {
+      "label": "Absence cluster count",
+      "source": "FY 23-24 daily Y/N",
+      "kind": "derived",
+      "formula": "transitions Y\u2192N counted",
+      "unit": "clusters"
+    },
+    "absent_days": {
+      "label": "Days absent",
+      "source": "FY 23-24 daily Y/N",
+      "kind": "real",
+      "formula": "sum of N",
+      "unit": "days"
+    },
+    "school_days": {
+      "label": "School days",
+      "source": "FY 23-24 daily Y/N",
+      "kind": "real",
+      "formula": "sum of Y + N",
+      "unit": "days"
+    },
+    "fa_avg": {
+      "label": "FA marks average",
+      "source": "FY 23-24 FA1\u2013FA4",
+      "kind": "real",
+      "formula": "mean(FA1..FA4)",
+      "unit": "marks"
+    },
+    "sa_avg": {
+      "label": "SA marks average",
+      "source": "FY 23-24 SA1/SA2",
+      "kind": "real",
+      "formula": "mean(SA1,SA2)",
+      "unit": "marks"
+    },
+    "overall_marks": {
+      "label": "Overall marks",
+      "source": "FY 23-24 FA+SA",
+      "kind": "real",
+      "formula": "mean(all marks)",
+      "unit": "marks"
+    },
+    "marks_trend": {
+      "label": "Marks trend",
+      "source": "FY 23-24 FA+SA",
+      "kind": "derived",
+      "formula": "last_valid - first_valid",
+      "unit": "\u0394 marks"
+    },
+    "first8_attendance_pct": {
+      "label": "First-8-week attendance",
+      "source": "Derived from full-year attendance (raw daily not in repo)",
+      "kind": "derived_proxy",
+      "formula": "proxy: full-year + seed-stable noise; replaced with real weeks 1\u20138 when raw CSV is supplied",
+      "unit": "%"
+    },
+    "first8_absent_days": {
+      "label": "First-8-week absent days",
+      "source": "Derived from full-year attendance",
+      "kind": "derived_proxy",
+      "formula": "round(40 * (1 - first8_attendance%/100))",
+      "unit": "days"
+    },
+    "first8_longest_streak": {
+      "label": "First-8-week longest streak",
+      "source": "Derived from full-year attendance",
+      "kind": "derived_proxy",
+      "formula": "seed-stable; capped by full-year streak",
+      "unit": "days"
+    },
+    "rules_risk_score": {
+      "label": "Risk score (rules)",
+      "source": "Composite of weighted, named drivers",
+      "kind": "model_output",
+      "formula": "see Model audit",
+      "unit": "0\u2013100"
+    },
+    "logistic_proba": {
+      "label": "Logistic probability",
+      "source": "sklearn LogisticRegression \u2014 cross-validated",
+      "kind": "model_output",
+      "formula": "P(dropout | full-year features)",
+      "unit": "0\u20131"
+    },
+    "gbm_proba": {
+      "label": "GBM probability",
+      "source": "sklearn GradientBoostingClassifier \u2014 cross-validated",
+      "kind": "model_output",
+      "formula": "P(dropout | full-year features)",
+      "unit": "0\u20131"
+    },
+    "early_proba": {
+      "label": "Hyper-early probability",
+      "source": "sklearn LogisticRegression on weeks 1\u20138 only",
+      "kind": "model_output",
+      "formula": "P(dropout | first-8-week features)",
+      "unit": "0\u20131"
+    },
+    "blended_score": {
+      "label": "Blended risk (0\u2013100)",
+      "source": "0.4\u00b7rules + 0.3\u00b7logistic + 0.3\u00b7gbm",
+      "kind": "model_output",
+      "formula": "weighted blend of three independent estimators",
+      "unit": "0\u2013100"
+    },
+    "syn_seasonal_migration_possibility": {
+      "label": "Seasonal migration possibility",
+      "source": "Synthetic \u2014 pending LEAP welfare integration",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_financial_stress": {
+      "label": "Household financial stress",
+      "source": "Synthetic \u2014 pending welfare data",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_child_labour_concern": {
+      "label": "Child labour concern",
+      "source": "Synthetic \u2014 flagged by teacher in LEAP (future)",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_early_marriage_concern": {
+      "label": "Early marriage concern",
+      "source": "Synthetic \u2014 flagged by teacher / counsellor",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_behavioural_disengagement": {
+      "label": "Behavioural disengagement",
+      "source": "Synthetic \u2014 teacher LEAP observation",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_transport_difficulty": {
+      "label": "Transport difficulty",
+      "source": "Synthetic \u2014 pending transport-allowance integration",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_peer_isolation": {
+      "label": "Peer isolation",
+      "source": "Synthetic \u2014 teacher observation",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "syn_parent_engagement": {
+      "label": "Parent engagement",
+      "source": "Synthetic \u2014 LEAP parent app",
+      "kind": "synthetic",
+      "unit": "categorical"
+    },
+    "syn_household_support_level": {
+      "label": "Household support level",
+      "source": "Synthetic \u2014 pending welfare integration",
+      "kind": "synthetic",
+      "unit": "categorical"
+    },
+    "syn_disability_support_need": {
+      "label": "Disability support need",
+      "source": "Synthetic \u2014 pending CWSN dataset",
+      "kind": "synthetic",
+      "unit": "0/1"
+    },
+    "intervention_completion_pct": {
+      "label": "Intervention completion %",
+      "source": "Synthetic \u2014 would come from LEAP action-log",
+      "kind": "synthetic_ops",
+      "unit": "%"
+    },
+    "overdue_actions": {
+      "label": "Overdue actions",
+      "source": "Synthetic \u2014 pending action-log integration",
+      "kind": "synthetic_ops",
+      "unit": "count"
+    },
+    "pending_home_visits": {
+      "label": "Pending home visits",
+      "source": "Synthetic \u2014 pending MEO worklist",
+      "kind": "synthetic_ops",
+      "unit": "count"
+    },
+    "pending_parent_calls": {
+      "label": "Pending parent calls",
+      "source": "Synthetic \u2014 pending teacher worklist",
+      "kind": "synthetic_ops",
+      "unit": "count"
+    },
+    "unresolved_escalations": {
+      "label": "Unresolved escalations",
+      "source": "Synthetic \u2014 pending district worklist",
+      "kind": "synthetic_ops",
+      "unit": "count"
+    },
+    "risk_change_pct": {
+      "label": "Period-over-period \u0394",
+      "source": "Synthetic \u2014 needs prior-period snapshot",
+      "kind": "synthetic_ops",
+      "unit": "%"
+    },
+    "forecast_projection_30d": {
+      "label": "30-day projection",
+      "source": "Holt linear on synthesised 4-week series",
+      "kind": "forecast",
+      "formula": "level + 4\u00b7trend",
+      "unit": "students"
+    },
+    "forecast_projection_60d": {
+      "label": "60-day projection",
+      "source": "Holt linear on synthesised 4-week series",
+      "kind": "forecast",
+      "formula": "level + 8\u00b7trend",
+      "unit": "students"
+    },
+    "udise_code": {
+      "label": "UDISE code",
+      "source": "School master CSV",
+      "kind": "real",
+      "unit": "id"
+    },
+    "district_name": {
+      "label": "District",
+      "source": "School master CSV",
+      "kind": "real"
+    },
+    "mandal_name": {
+      "label": "Mandal",
+      "source": "School master CSV",
+      "kind": "real"
+    },
+    "anon_id": {
+      "label": "Anon ID",
+      "source": "Stable SHA-256 hash of CHILD_SNO + per-deploy salt",
+      "kind": "anonymised",
+      "formula": "sha256(salt::CHILD_SNO)[:8]"
+    }
+  }
+}

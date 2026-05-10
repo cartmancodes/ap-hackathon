@@ -1,0 +1,132 @@
+[
+  {
+    "file": "counsellor/anakapalli.json",
+    "count": 205,
+    "district": "ANAKAPALLI"
+  },
+  {
+    "file": "counsellor/anantapur.json",
+    "count": 1017,
+    "district": "ANANTAPUR"
+  },
+  {
+    "file": "counsellor/annamayya.json",
+    "count": 635,
+    "district": "ANNAMAYYA"
+  },
+  {
+    "file": "counsellor/asr.json",
+    "count": 262,
+    "district": "ASR"
+  },
+  {
+    "file": "counsellor/bapatla.json",
+    "count": 115,
+    "district": "BAPATLA"
+  },
+  {
+    "file": "counsellor/chittoor.json",
+    "count": 408,
+    "district": "CHITTOOR"
+  },
+  {
+    "file": "counsellor/east_godavari.json",
+    "count": 405,
+    "district": "EAST GODAVARI"
+  },
+  {
+    "file": "counsellor/eluru.json",
+    "count": 313,
+    "district": "ELURU"
+  },
+  {
+    "file": "counsellor/guntur.json",
+    "count": 195,
+    "district": "GUNTUR"
+  },
+  {
+    "file": "counsellor/kadapa.json",
+    "count": 734,
+    "district": "KADAPA"
+  },
+  {
+    "file": "counsellor/kakinada.json",
+    "count": 439,
+    "district": "KAKINADA"
+  },
+  {
+    "file": "counsellor/konaseema.json",
+    "count": 303,
+    "district": "KONASEEMA"
+  },
+  {
+    "file": "counsellor/krishna.json",
+    "count": 248,
+    "district": "KRISHNA"
+  },
+  {
+    "file": "counsellor/kurnool.json",
+    "count": 2621,
+    "district": "KURNOOL"
+  },
+  {
+    "file": "counsellor/manyam.json",
+    "count": 141,
+    "district": "MANYAM"
+  },
+  {
+    "file": "counsellor/nandyal.json",
+    "count": 1253,
+    "district": "NANDYAL"
+  },
+  {
+    "file": "counsellor/nellore.json",
+    "count": 311,
+    "district": "NELLORE"
+  },
+  {
+    "file": "counsellor/ntr.json",
+    "count": 318,
+    "district": "NTR"
+  },
+  {
+    "file": "counsellor/palnadu.json",
+    "count": 241,
+    "district": "PALNADU"
+  },
+  {
+    "file": "counsellor/prakasam.json",
+    "count": 371,
+    "district": "PRAKASAM"
+  },
+  {
+    "file": "counsellor/sri_satyasai.json",
+    "count": 569,
+    "district": "SRI SATYASAI"
+  },
+  {
+    "file": "counsellor/srikakulam.json",
+    "count": 205,
+    "district": "SRIKAKULAM"
+  },
+  {
+    "file": "counsellor/tirupati.json",
+    "count": 413,
+    "district": "TIRUPATI"
+  },
+  {
+    "file": "counsellor/visakhapatnam.json",
+    "count": 250,
+    "district": "VISAKHAPATNAM"
+  },
+  {
+    "file": "counsellor/vizianagaram.json",
+    "count": 230,
+    "district": "VIZIANAGARAM"
+  },
+  {
+    "file": "counsellor/west_godavari.json",
+    "count": 228,
+    "district": "WEST GODAVARI"
+  }
+]

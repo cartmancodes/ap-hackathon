@@ -2,14 +2,18 @@ import { tierColor, tierDot, supportiveTier } from "../util";
 import type { Tier } from "../types";
 import { ArrowDown, ArrowUp, Minus } from "lucide-react";
 import type { ReactNode } from "react";
+import { ProvChip } from "./DataPoint";
 
-export function KPI({ label, value, sub, tone = "neutral", icon }: {
-  label: string; value: ReactNode; sub?: ReactNode; tone?: "neutral" | "good" | "bad" | "warn"; icon?: ReactNode;
+export function KPI({ label, value, sub, tone = "neutral", icon, pointKey }: {
+  label: string; value: ReactNode; sub?: ReactNode; tone?: "neutral" | "good" | "bad" | "warn"; icon?: ReactNode; pointKey?: string;
 }) {
   const toneCls = tone === "good" ? "text-emerald-700" : tone === "bad" ? "text-red-700" : tone === "warn" ? "text-orange-700" : "text-slate-900";
   return (
     <div className="card p-4">
-      <div className="text-xs uppercase text-slate-500 font-medium tracking-wide flex items-center gap-1.5">{icon}{label}</div>
+      <div className="text-xs uppercase text-slate-500 font-medium tracking-wide flex items-center gap-1.5">
+        {icon}{label}
+        {pointKey && <ProvChip pointKey={pointKey} />}
+      </div>
       <div className={`text-2xl font-semibold mt-1 ${toneCls}`}>{value}</div>
       {sub && <div className="text-xs text-slate-500 mt-1">{sub}</div>}
     </div>
@@ -31,12 +35,15 @@ export function TrendArrow({ change }: { change: number }) {
   return <span className="text-emerald-600 inline-flex items-center gap-1"><ArrowDown className="w-3 h-3" />{change.toFixed(1)}%</span>;
 }
 
-export function Section({ title, sub, right, children }: { title: string; sub?: string; right?: ReactNode; children: ReactNode }) {
+export function Section({ title, sub, right, children, pointKey }: { title: string; sub?: string; right?: ReactNode; children: ReactNode; pointKey?: string }) {
   return (
     <section className="card p-4 mb-4">
       <div className="flex items-end justify-between mb-3">
         <div>
-          <h2 className="text-base font-semibold text-slate-900">{title}</h2>
+          <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
+            {title}
+            {pointKey && <ProvChip pointKey={pointKey} />}
+          </h2>
           {sub && <div className="text-xs text-slate-500">{sub}</div>}
         </div>
         {right}
@@ -84,6 +91,16 @@ export function SyntheticBadge() {
   return (
     <span className="pill bg-violet-50 text-violet-700 ring-1 ring-violet-200" title="Synthetic signal — clearly marked. Will come from LEAP / welfare datasets when integrated.">
       synthetic
+    </span>
+  );
+}
+
+/** Pass/Fail criterion badge — used in Model Audit PoC card and elsewhere. */
+export function CriterionBadge({ pass, label }: { pass: boolean; label: string }) {
+  return (
+    <span className={`pill ${pass ? "bg-emerald-100 text-emerald-800 ring-1 ring-emerald-200" : "bg-red-100 text-red-800 ring-1 ring-red-200"}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${pass ? "bg-emerald-500" : "bg-red-500"}`} />
+      {pass ? "PASS" : "FAIL"} · {label}
     </span>
   );
 }

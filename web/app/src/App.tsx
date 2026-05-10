@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TopBar } from "./components/Layout";
+import { ToastStack } from "./components/DataPoint";
 import { useUI } from "./store";
 import { useAppData } from "./data";
 import { StateView } from "./views/StateView";
@@ -10,6 +11,9 @@ import { TeacherView } from "./views/TeacherView";
 import { LeapIntegration } from "./views/LeapIntegration";
 import { ModelAudit } from "./views/ModelAudit";
 import { About } from "./views/About";
+import { EarlyWarning } from "./views/EarlyWarning";
+import { Counsellor } from "./views/Counsellor";
+import { Forecast } from "./views/Forecast";
 
 export default function App() {
   const [tab, setTab] = useState("dashboard");
@@ -27,6 +31,9 @@ export default function App() {
           </div>
         )}
         {data && tab === "dashboard" && <RoleSwitcher role={role} />}
+        {data && tab === "early" && <EarlyWarning />}
+        {data && tab === "counsellor" && <Counsellor />}
+        {data && tab === "forecast" && <Forecast />}
         {data && tab === "leap" && <LeapIntegration />}
         {data && tab === "audit" && <ModelAudit />}
         {data && tab === "about" && <About />}
@@ -34,6 +41,7 @@ export default function App() {
       <footer className="bg-slate-100 border-t border-slate-200 text-xs text-slate-500 px-6 py-3 text-center">
         Stay-In School prototype · School Education Department, Government of Andhra Pradesh
       </footer>
+      <ToastStack />
     </div>
   );
 }
@@ -49,12 +57,8 @@ function RoleSwitcher({ role }: { role: string }) {
   }
 }
 
-// District-officer home: pre-pick the highest-need district as their default scope
-import { useEffect } from "react";
-import { useAppData as useData2 } from "./data";
-
 function DistrictAsRoleHome() {
-  const { data } = useData2();
+  const { data } = useAppData();
   const { selection, drillTo } = useUI();
   useEffect(() => {
     if (!data) return;
@@ -68,7 +72,7 @@ function DistrictAsRoleHome() {
 }
 
 function MandalAsRoleHome() {
-  const { data } = useData2();
+  const { data } = useAppData();
   const { selection, drillTo } = useUI();
   useEffect(() => {
     if (!data) return;

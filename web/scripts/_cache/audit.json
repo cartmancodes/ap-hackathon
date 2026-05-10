@@ -1,0 +1,108 @@
+{
+  "n": 12430,
+  "dropouts": 4466,
+  "models": {
+    "logistic": {
+      "name": "Logistic (interpretable baseline)",
+      "roc_auc": 0.7259,
+      "pr_auc": 0.5826,
+      "top10": {
+        "k_pct": 0.1,
+        "n_selected": 1243,
+        "precision": 0.6895,
+        "recall": 0.1919,
+        "captured": 857,
+        "total_dropouts": 4466
+      },
+      "top20": {
+        "k_pct": 0.2,
+        "n_selected": 2486,
+        "precision": 0.6376,
+        "recall": 0.3549,
+        "captured": 1585,
+        "total_dropouts": 4466
+      },
+      "poc_top20": {
+        "threshold_percentile": 20,
+        "true_positive": 1585,
+        "false_positive": 901,
+        "true_negative": 7063,
+        "false_negative": 2881,
+        "inclusion_error": 0.3624,
+        "exclusion_error": 0.6451,
+        "inclusion_target": 0.8,
+        "exclusion_target": 0.2,
+        "inclusion_pass": true,
+        "exclusion_pass": false
+      }
+    },
+    "gbm": {
+      "name": "Gradient Boosting",
+      "roc_auc": 0.7467,
+      "pr_auc": 0.6097,
+      "top10": {
+        "k_pct": 0.1,
+        "n_selected": 1243,
+        "precision": 0.7168,
+        "recall": 0.1995,
+        "captured": 891,
+        "total_dropouts": 4466
+      },
+      "top20": {
+        "k_pct": 0.2,
+        "n_selected": 2486,
+        "precision": 0.6565,
+        "recall": 0.3654,
+        "captured": 1632,
+        "total_dropouts": 4466
+      },
+      "poc_top20": {
+        "threshold_percentile": 20,
+        "true_positive": 1632,
+        "false_positive": 854,
+        "true_negative": 7110,
+        "false_negative": 2834,
+        "inclusion_error": 0.3435,
+        "exclusion_error": 0.6346,
+        "inclusion_target": 0.8,
+        "exclusion_target": 0.2,
+        "inclusion_pass": true,
+        "exclusion_pass": false
+      }
+    },
+    "hyper_early": {
+      "name": "Hyper-early (weeks 1-8 only)",
+      "roc_auc": 0.6555,
+      "pr_auc": 0.4951,
+      "top10": {
+        "k_pct": 0.1,
+        "n_selected": 1243,
+        "precision": 0.5784,
+        "recall": 0.161,
+        "captured": 719,
+        "total_dropouts": 4466
+      },
+      "top20": {
+        "k_pct": 0.2,
+        "n_selected": 2486,
+        "precision": 0.5724,
+        "recall": 0.3186,
+        "captured": 1423,
+        "total_dropouts": 4466
+      },
+      "poc_top20": {
+        "threshold_percentile": 20,
+        "true_positive": 1423,
+        "false_positive": 1063,
+        "true_negative": 6901,
+        "false_negative": 3043,
+        "inclusion_error": 0.4276,
+        "exclusion_error": 0.6814,
+        "inclusion_target": 0.8,
+        "exclusion_target": 0.2,
+        "inclusion_pass": true,
+        "exclusion_pass": false
+      }
+    }
+  }
+}

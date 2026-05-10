@@ -16,22 +16,10 @@ export function StateView() {
   const [scenarioBudget, setScenarioBudget] = useState(10000);
   const [stateNote, setStateNote] = useState<string>("");
 
-  if (!data) return <div className="p-6 text-slate-500">Loading…</div>;
-  if (selection.district) return <DistrictView />;
-
-  const { state, districts } = data;
-
-  const districts_sorted = [...districts].sort((a, b) => b.high_risk - a.high_risk);
-  const worsening = [...districts].sort((a, b) => b.risk_change_pct - a.risk_change_pct).slice(0, 5);
-  const improving = [...districts].sort((a, b) => a.risk_change_pct - b.risk_change_pct).slice(0, 5);
-  const lowest_completion = [...districts].sort((a, b) => a.intervention_completion_pct - b.intervention_completion_pct).slice(0, 5);
-
-  // policy-level driver aggregation
-  const driverTotals: Record<string, number> = {};
-  for (const d of districts) for (const [k, v] of d.top_drivers) driverTotals[k] = (driverTotals[k] || 0) + v;
-  const drivers = Object.entries(driverTotals).sort((a, b) => b[1] - a[1]).slice(0, 7);
-
-  // Scenario: how many high-risk students get covered if we focus on top-N districts
+  // Hooks MUST be called on every render in the same order — keep them above
+  // any conditional/early returns. (Bug fixed: useMemo below an early return
+  // crashed the app the moment a district was clicked.)
+  const districts = data?.districts ?? [];
   const scenarioPlan = useMemo(() => {
     const sorted = [...districts].sort((a, b) => (b.critical * 2 + b.high_risk) - (a.critical * 2 + a.high_risk));
     const plan: { district: string; covers: number }[] = [];
@@ -44,6 +32,21 @@ export function StateView() {
     }
     return plan;
   }, [districts, scenarioBudget]);
+
+  if (!data) return <div className="p-6 text-slate-500">Loading…</div>;
+  if (selection.district) return <DistrictView />;
+
+  const { state } = data;
+
+  const districts_sorted = [...districts].sort((a, b) => b.high_risk - a.high_risk);
+  const worsening = [...districts].sort((a, b) => b.risk_change_pct - a.risk_change_pct).slice(0, 5);
+  const improving = [...districts].sort((a, b) => a.risk_change_pct - b.risk_change_pct).slice(0, 5);
+  const lowest_completion = [...districts].sort((a, b) => a.intervention_completion_pct - b.intervention_completion_pct).slice(0, 5);
+
+  // policy-level driver aggregation
+  const driverTotals: Record<string, number> = {};
+  for (const d of districts) for (const [k, v] of d.top_drivers) driverTotals[k] = (driverTotals[k] || 0) + v;
+  const drivers = Object.entries(driverTotals).sort((a, b) => b[1] - a[1]).slice(0, 7);
 
   return (
     <div>

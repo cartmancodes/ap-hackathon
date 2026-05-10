@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useAppData } from "../data";
+import { useAppData, useDistrictStudents } from "../data";
 import { useUI } from "../store";
 import { t } from "../i18n";
 import { KPI, Section, ProgressBar, Tag } from "../components/UI";
@@ -11,16 +11,16 @@ import { SchoolView } from "./SchoolView";
 export function MandalView() {
   const { data } = useAppData();
   const { selection, drillTo, lang, back } = useUI();
+  const district = selection.district || "";
+  const mandal = selection.mandal || "";
+  const { students: bundleStudents, loading } = useDistrictStudents(district);
+  const schools = useMemo(() => data?.schools.filter((s) => s.district_name === district && s.mandal_name === mandal) ?? [], [data, district, mandal]);
+  const students = useMemo(() => ((bundleStudents || data?.students) ?? []).filter((s) => s.district === district && s.mandal === mandal), [bundleStudents, data, district, mandal]);
 
   if (!data) return null;
   if (selection.udise) return <SchoolView />;
 
-  const district = selection.district!;
-  const mandal = selection.mandal!;
   const m = data.mandals.find((x) => x.district_name === district && x.mandal_name === mandal)!;
-  const schools = useMemo(() => data.schools.filter((s) => s.district_name === district && s.mandal_name === mandal), [data, district, mandal]);
-  const students = useMemo(() => data.students.filter((s) => s.district === district && s.mandal === mandal), [data, district, mandal]);
-
   const sortedSchools = [...schools].sort((a, b) => b.high_risk - a.high_risk);
   const homeVisitQueue = students
     .filter((s) => s.tier === "Critical Support Needed" || s.tier === "High Support Needed")
@@ -35,13 +35,13 @@ export function MandalView() {
       ]} />
 
       <h1 className="text-xl font-semibold mb-1">{mandal} — {t("mandal_overview", lang)}</h1>
-      <div className="text-sm text-slate-500 mb-4">{schools.length} schools · {students.length} students needing support</div>
+      <div className="text-sm text-slate-500 mb-4">{schools.length} schools · {students.length} students needing support {loading && <span className="text-blue-600">· loading…</span>}</div>
 
       <div className="grid md:grid-cols-4 gap-3 mb-4">
-        <KPI icon={<AlertTriangle className="w-3.5 h-3.5" />} label={t("high_risk_students", lang)} value={m.high_risk} sub={`${m.critical} critical`} tone="bad" />
-        <KPI icon={<ShieldCheck className="w-3.5 h-3.5" />} label={t("high_recov", lang)} value={m.high_recoverability_count} tone="good" />
-        <KPI label="Action completion" value={`${m.intervention_completion_pct.toFixed(0)}%`} tone={m.intervention_completion_pct < 50 ? "bad" : "neutral"} />
-        <KPI label="Overdue actions" value={m.overdue_actions} sub={`Pending home visits: ${m.pending_home_visits}`} tone="warn" />
+        <KPI pointKey="rules_risk_score" icon={<AlertTriangle className="w-3.5 h-3.5" />} label={t("high_risk_students", lang)} value={m.high_risk} sub={`${m.critical} critical`} tone="bad" />
+        <KPI pointKey="rules_risk_score" icon={<ShieldCheck className="w-3.5 h-3.5" />} label={t("high_recov", lang)} value={m.high_recoverability_count} tone="good" />
+        <KPI pointKey="intervention_completion_pct" label="Action completion" value={`${m.intervention_completion_pct.toFixed(0)}%`} tone={m.intervention_completion_pct < 50 ? "bad" : "neutral"} />
+        <KPI pointKey="overdue_actions" label="Overdue actions" value={m.overdue_actions} sub={`Pending home visits: ${m.pending_home_visits}`} tone="warn" />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">

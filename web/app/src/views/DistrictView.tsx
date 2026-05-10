@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useAppData } from "../data";
+import { useAppData, useDistrictStudents } from "../data";
 import { useUI } from "../store";
 import { t } from "../i18n";
 import { KPI, Section, ProgressBar, Tag } from "../components/UI";
@@ -11,15 +11,15 @@ import { MandalView } from "./MandalView";
 export function DistrictView() {
   const { data } = useAppData();
   const { selection, drillTo, lang, resetSelection } = useUI();
+  const district = selection.district || "";
+  const { loading } = useDistrictStudents(district);
+  const mandals = useMemo(() => data?.mandals.filter((m) => m.district_name === district) ?? [], [data, district]);
+  const schools = useMemo(() => data?.schools.filter((s) => s.district_name === district) ?? [], [data, district]);
 
   if (!data) return null;
   if (selection.mandal) return <MandalView />;
 
-  const district = selection.district!;
   const districts = data.districts.find((x) => x.district_name === district)!;
-  const mandals = useMemo(() => data.mandals.filter((m) => m.district_name === district), [data, district]);
-  const schools = useMemo(() => data.schools.filter((s) => s.district_name === district), [data, district]);
-
   const sortedMandals = [...mandals].sort((a, b) => (b.critical * 2 + b.high_risk) - (a.critical * 2 + a.high_risk));
   const lowCompletion = [...mandals].sort((a, b) => a.intervention_completion_pct - b.intervention_completion_pct).slice(0, 6);
   const top_schools = [...schools].sort((a, b) => b.high_risk - a.high_risk).slice(0, 10);
@@ -32,13 +32,16 @@ export function DistrictView() {
       ]} />
 
       <h1 className="text-xl font-semibold mb-1">{district} — {t("district_overview", lang)}</h1>
-      <div className="text-sm text-slate-500 mb-4">{mandals.length} mandals · {schools.length} schools (in sample)</div>
+      <div className="text-sm text-slate-500 mb-4">
+        {mandals.length} mandals · {schools.length} schools (in sample)
+        {loading && <span className="ml-2 text-blue-600">· loading district student bundle…</span>}
+      </div>
 
       <div className="grid md:grid-cols-4 gap-3 mb-4">
-        <KPI icon={<AlertTriangle className="w-3.5 h-3.5" />} label={t("high_risk_students", lang)} value={districts.high_risk.toLocaleString()} sub={`${districts.critical} critical · ${districts.watch} watch`} tone="bad" />
-        <KPI icon={<ShieldCheck className="w-3.5 h-3.5" />} label={t("high_recov", lang)} value={districts.high_recoverability_count.toLocaleString()} tone="good" />
-        <KPI icon={<Users className="w-3.5 h-3.5" />} label={t("intervention_completion", lang)} value={`${districts.intervention_completion_pct.toFixed(0)}%`} tone={districts.intervention_completion_pct < 50 ? "bad" : "neutral"} />
-        <KPI label={t("unresolved_escalations", lang)} value={districts.unresolved_escalations} sub={`avg attendance ${districts.avg_attendance}%`} />
+        <KPI pointKey="rules_risk_score" icon={<AlertTriangle className="w-3.5 h-3.5" />} label={t("high_risk_students", lang)} value={districts.high_risk.toLocaleString()} sub={`${districts.critical} critical · ${districts.watch} watch`} tone="bad" />
+        <KPI pointKey="rules_risk_score" icon={<ShieldCheck className="w-3.5 h-3.5" />} label={t("high_recov", lang)} value={districts.high_recoverability_count.toLocaleString()} tone="good" />
+        <KPI pointKey="intervention_completion_pct" icon={<Users className="w-3.5 h-3.5" />} label={t("intervention_completion", lang)} value={`${districts.intervention_completion_pct.toFixed(0)}%`} tone={districts.intervention_completion_pct < 50 ? "bad" : "neutral"} />
+        <KPI pointKey="unresolved_escalations" label={t("unresolved_escalations", lang)} value={districts.unresolved_escalations} sub={`avg attendance ${districts.avg_attendance}%`} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">

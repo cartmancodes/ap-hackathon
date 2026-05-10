@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useAppData } from "../data";
+import { useAppData, useDistrictStudents } from "../data";
 import { useUI } from "../store";
 import { KPI, Section, RiskBadge, Tag } from "../components/UI";
 import { StudentDetail } from "../components/StudentDetail";
@@ -16,16 +16,13 @@ export function HeadmasterView() {
     return cached ? parseInt(cached) : null;
   });
 
-  if (!data) return null;
+  const defaultSchool = useMemo(() => data ? [...data.schools].sort((a, b) => b.high_risk - a.high_risk)[0] : null, [data]);
+  const udise = pickedSchool ?? defaultSchool?.udise_code ?? 0;
+  const school = data?.schools.find((s) => s.udise_code === udise) || defaultSchool;
+  const { students: bundle, loading } = useDistrictStudents(school?.district_name);
+  const students = useMemo(() => ((bundle || data?.students) ?? []).filter((s) => s.udise === udise), [bundle, data, udise]);
 
-  // Derive default school: pick a school with the most high-risk students for a believable demo
-  const defaultSchool = useMemo(() => {
-    return [...data.schools].sort((a, b) => b.high_risk - a.high_risk)[0];
-  }, [data]);
-
-  const udise = pickedSchool ?? defaultSchool.udise_code;
-  const school = data.schools.find((s) => s.udise_code === udise) || defaultSchool;
-  const students = useMemo(() => data.students.filter((s) => s.udise === udise), [data, udise]);
+  if (!data || !school) return null;
 
   if (selection.studentId) {
     const st = students.find((s) => s.id === selection.studentId);
@@ -36,8 +33,8 @@ export function HeadmasterView() {
   const recoverableHigh = students.filter((s) => s.rec.startsWith("High") && (s.tier === "High Support Needed" || s.tier === "Critical Support Needed"));
   const sudden = students.filter((s) => (s.f.attendance_delta_30d ?? 0) < -10);
   const declining = students.filter((s) => (s.f.marks_trend ?? 0) < -25);
+  const earlyFlagged = students.filter((s) => (s.ml_early ?? 0) > 0.5);
 
-  // class-wise rising absenteeism
   const byClass: Record<string, Student[]> = {};
   for (const s of students) (byClass[`${s.class}-${s.section}`] ||= []).push(s);
   const classRisk = Object.entries(byClass).map(([k, v]) => ({
@@ -51,7 +48,7 @@ export function HeadmasterView() {
       <div className="flex items-end justify-between mb-2">
         <div>
           <h1 className="text-xl font-semibold">Headmaster — {school.school_name}</h1>
-          <div className="text-sm text-slate-500">UDISE {school.udise_code} · {school.mandal_name}, {school.district_name}</div>
+          <div className="text-sm text-slate-500">UDISE {school.udise_code} · {school.mandal_name}, {school.district_name} {loading && <span className="text-blue-600">· loading…</span>}</div>
         </div>
         <select
           className="text-sm rounded-lg border border-slate-200 px-3 py-1.5 bg-white"
@@ -65,10 +62,10 @@ export function HeadmasterView() {
       </div>
 
       <div className="grid md:grid-cols-4 gap-3 mb-4">
-        <KPI label="Students needing support today" value={school.high_risk} sub={`${school.critical} critical`} tone="bad" />
+        <KPI pointKey="rules_risk_score" label="Students needing support today" value={school.high_risk} sub={`${school.critical} critical`} tone="bad" />
         <KPI label="High recoverability" value={school.high_recoverability_count} tone="good" />
-        <KPI label="Pending parent calls" value={school.pending_parent_calls} tone="warn" />
-        <KPI label="Overdue actions" value={school.overdue_actions} tone="warn" />
+        <KPI pointKey="pending_parent_calls" label="Pending parent calls" value={school.pending_parent_calls} tone="warn" />
+        <KPI pointKey="early_proba" label="Hyper-early flagged" value={earlyFlagged.length} tone="warn" sub="First 8 weeks model" />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">

@@ -21,10 +21,15 @@ Plus: a **LEAP integration concept** (what's pulled, what's pushed, role-based a
 ## Running
 
 ```bash
-# 1. Preprocess data (one-time; outputs JSON under web/app/public/data)
-python3 -m venv .venv
-.venv/bin/pip install pandas openpyxl numpy
-.venv/bin/python web/scripts/preprocess.py
+# 1. (Optional) preprocess data — only needed if you change the raw inputs.
+#    The repo already ships generated JSON under web/app/public/data/.
+pip install pandas openpyxl numpy scikit-learn pyarrow
+
+python3 web/scripts/01_features.py     # feature extraction (CSV stream or JSON fallback)
+python3 web/scripts/02_train.py        # logistic + GBM + hyper-early models (5-fold CV)
+python3 web/scripts/03_score.py        # per-student scores + local explanations
+python3 web/scripts/04_aggregate.py    # state / district / mandal / school + forecast + catalog
+python3 web/scripts/05_counsellor.py   # SMS / guide / remediation plan per student
 
 # 2. Run the web app
 cd web/app
@@ -32,7 +37,8 @@ npm install
 npm run dev    # http://localhost:5173 (or next free port)
 ```
 
-Switch role from the dropdown in the top bar. Tabs: **Dashboard · LEAP integration · Model audit · About**.
+Switch role from the dropdown in the top bar. Tabs: **Dashboard · Hyper-early · Counsellor · Forecast · LEAP integration · Model audit · About**.
+Press `/` from anywhere to open the global search.
 
 ## Data
 

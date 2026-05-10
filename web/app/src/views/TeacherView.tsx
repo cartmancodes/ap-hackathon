@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useAppData } from "../data";
+import { useAppData, useDistrictStudents } from "../data";
 import { useUI } from "../store";
 import { t } from "../i18n";
 import { Section, RiskBadge, Tag, KPI } from "../components/UI";
@@ -17,12 +17,13 @@ export function TeacherView() {
   const [picked, setPicked] = useState<string>(() => localStorage.getItem(TEACHER_KEY) || "");
   const [activeStudent, setActiveStudent] = useState<Student | null>(null);
 
-  if (!data) return null;
+  const candidateSchools = useMemo(() => data ? [...data.schools].sort((a, b) => b.high_risk - a.high_risk).slice(0, 10) : [], [data]);
+  const teacherSchool = candidateSchools[0] ?? null;
+  const { students: bundle, loading } = useDistrictStudents(teacherSchool?.district_name);
 
-  // Build list of available class signatures from one believable school
-  const candidateSchools = useMemo(() => [...data.schools].sort((a, b) => b.high_risk - a.high_risk).slice(0, 10), [data]);
-  const teacherSchool = candidateSchools[0];
-  const teacherStudents = useMemo(() => data.students.filter((s) => s.udise === teacherSchool.udise_code), [data, teacherSchool]);
+  const teacherStudents = useMemo(() =>
+    ((bundle || data?.students) ?? []).filter((s) => s.udise === teacherSchool?.udise_code),
+    [bundle, data, teacherSchool]);
 
   const classOptions = useMemo(() => {
     const map: Record<string, number> = {};
@@ -33,8 +34,10 @@ export function TeacherView() {
   const myClass = picked || classOptions[0] || "8-A";
   const myStudents = useMemo(() => teacherStudents.filter((s) => `${s.class}-${s.section}` === myClass), [teacherStudents, myClass]);
 
+  if (!data || !teacherSchool) return null;
+
   if (selection.studentId) {
-    const st = myStudents.find((s) => s.id === selection.studentId) || data.students.find((s) => s.id === selection.studentId);
+    const st = myStudents.find((s) => s.id === selection.studentId) || teacherStudents.find((s) => s.id === selection.studentId);
     if (st) return <StudentDetail student={st} supportiveLanguage />;
   }
 
@@ -48,7 +51,7 @@ export function TeacherView() {
       <div className="flex items-end justify-between mb-2">
         <div>
           <h1 className="text-xl font-semibold">{t("teacher_today", lang)}</h1>
-          <div className="text-sm text-slate-500">{teacherSchool.school_name} · Class {myClass}</div>
+          <div className="text-sm text-slate-500">{teacherSchool.school_name} · Class {myClass} {loading && <span className="text-blue-600">· loading…</span>}</div>
         </div>
         <div className="flex items-center gap-2">
           <select className="text-sm rounded-lg border border-slate-200 px-3 py-1.5 bg-white"
@@ -63,7 +66,7 @@ export function TeacherView() {
       <div className="grid md:grid-cols-4 gap-3 mb-4">
         <KPI label="Students to act on today" value={pendingCount} tone={pendingCount > 0 ? "warn" : "good"} />
         <KPI label="Parent calls due" value={today.filter((s) => s.act.action.includes("Parent") || s.act.action.includes("SMS")).length} />
-        <KPI label="Repeated absentees" value={myStudents.filter((s) => (s.f.attendance_pct ?? 100) < 50).length} tone="bad" />
+        <KPI pointKey="attendance_pct" label="Repeated absentees" value={myStudents.filter((s) => (s.f.attendance_pct ?? 100) < 50).length} tone="bad" />
         <KPI label="Improving" value={improving.length} tone="good" />
       </div>
 

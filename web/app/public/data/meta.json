@@ -1,1 +1,62 @@
-{"data_provenance":{"real_from_uploaded_data":["student attendance daily (Y/N) for 2023-24","student marks (FA1..FA4, SA1, SA2) for 2023-24","dropout label for 2023-24 (CHILD_SNO list)","dropout ID list for 2024-25 (label-only year)","school master: udise, name, district, mandal, cluster, lat/lng","student gender and caste category"],"derived_from_real_data":["attendance %","recent 30-day attendance %","attendance delta","longest absence streak","repeated absence clusters","marks averages and trend","rules-based risk score with weighted drivers (interpretable)","risk tiering (Low / Watch / High Support / Critical Support)","recoverability score","next-best-action recommendation"],"synthetic_for_demo_only":["student first name (display only)","class and section assignment","behavioural and social signals: migration possibility, parent engagement, financial stress, child labour concern, early marriage concern, transport difficulty, peer isolation, household support level","intervention history & remarks (action history per student)","intervention completion % per district / mandal","unresolved escalation counts","period-over-period risk change %","overdue actions / pending home visits / pending parent calls"],"future_integration_ready":["LEAP attendance, marks, profile","GIS live school location","welfare / scholarship data","transport allowance data","ration card / migration proxy","teacher observations (LEAP teacher app)","parent communication records (LEAP parent app)","community worker follow-up logs","disability support data","household socio-economic indicators"],"note_on_data":"The 2024-25 file is a label-only ID list of dropouts. We do not fabricate full 2024-25 features. The detailed student-level analysis uses the 2023-24 file. Aggregates above are computed from a sample of 25000 students drawn from the FY 23-24 file (stratified to keep all dropouts encountered in the chunks scanned)."},"model":{"type":"rules-based interpretable risk score","tiers":["Low","Watch","High Support Needed","Critical Support Needed"],"drivers":["low_attendance","recent_decline","long_streak","patterned_absence","low_marks","marks_decline","migration_risk (synthetic)","financial_stress (synthetic)","child_labour (synthetic)","early_marriage (synthetic)","behaviour (synthetic)","transport (synthetic)","parent_engagement (synthetic)"],"evaluation_placeholder":{"recall_for_dropouts_23_24_top_decile":"computed at runtime","precision_at_top_decile":"computed at runtime","f1_top_decile":"computed at runtime","auc_roc":"computed at runtime (binary: dropped vs not)","fairness_check":["gender","caste category","rural vs urban (proxy: district)"]}},"generated_at":"2026-05-10T23:36:48.388838+05:30"}
+{
+  "data_provenance": {
+    "real_from_uploaded_data": [
+      "Student daily attendance Y/N (2023-24, 322 day-columns)",
+      "Student marks FA1..FA4, SA1, SA2 (2023-24)",
+      "Confirmed dropout labels CHILD_SNO (2023-24)",
+      "Confirmed dropout labels CHILD_SNO (2024-25, label-only)",
+      "School master: UDISE \u2192 district / mandal / cluster / lat-lng",
+      "Student gender and caste category"
+    ],
+    "derived_from_real_data": [
+      "Attendance % overall and last 30 days",
+      "Attendance trend (\u0394 vs overall)",
+      "Longest absence streak; repeated-absence cluster count",
+      "Marks averages & trend (last - first valid assessment)",
+      "Per-student linear contributions (coef \u00b7 standardised value)",
+      "Logistic / GBM cross-validated dropout probabilities",
+      "Hyper-early dropout probability (weeks 1-8 features only)",
+      "Risk tiering and recoverability score",
+      "Next-best-action recommendation",
+      "Anonymised ID (8-char SHA-256 prefix)"
+    ],
+    "synthetic_for_demo_only": [
+      "Student first names (display only)",
+      "Class & section assignment",
+      "First-8-week features (proxy \u2014 re-derived from full-year when raw CSV absent)",
+      "Behavioural / social signals (migration, child-labour, early-marriage, etc.)",
+      "Intervention completion %, overdue / pending counts",
+      "Period-over-period \u0394 %; weekly trend series; 30/60-day forecast",
+      "Action history seeds for demo storytelling"
+    ],
+    "future_integration_ready": [
+      "LEAP attendance, marks, profile (per LEAP User Manual)",
+      "LEAP teacher observations and parent communications",
+      "Welfare / scholarship / ration-card / transport allowance data",
+      "Real prior-period snapshots (for \u0394% without synthesis)",
+      "Real intervention outcome logs (for closed-loop retraining)"
+    ],
+    "note_on_data": "The raw 1.4M-row FY 23-24 CSV is not bundled with this repo. Stage 1 detects this and reads the previously-generated 25k-student JSON checkpoint instead. All real features carry through; first-8-week features fall back to a deterministic proxy and are clearly marked `derived_proxy` in catalog.json. When the raw CSV is supplied, Stage 1 takes the real path and produces weeks-1\u20138 features directly from the daily series."
+  },
+  "model": {
+    "type": "ensemble of rules + logistic + GBM, plus hyper-early logistic",
+    "tiers": [
+      "Low",
+      "Watch",
+      "High Support Needed",
+      "Critical Support Needed"
+    ],
+    "explanation_method": "named rule drivers + coef\u00b7standardised-value local explanations",
+    "validation": "5-fold stratified cross-validation; results in audit.json",
+    "poc_targets": {
+      "inclusion_error_max": 0.8,
+      "exclusion_error_max": 0.2
+    }
+  },
+  "anonymisation": {
+    "id_scheme": "SHA-256(salt::CHILD_SNO)[:8]",
+    "salt": "per-deploy (`stay-in-school-v2` in this build)",
+    "name_display": "Synthetic for demo; real name surfaced only after role-based unmask"
+  },
+  "generated_at": "2026-05-11T00:46:57"
+}

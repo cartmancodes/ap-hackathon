@@ -1,1 +1,201 @@
-{"rows_total":25000,"actual_dropouts_in_sample":6000,"top_10pct_capture_rate":0.234,"top_20pct_capture_rate":0.427,"top_10pct_precision":0.563,"top_20pct_precision":0.512,"avg_risk_dropouts":44.8,"avg_risk_non_dropouts":23.8,"by_gender":{"Female":{"n":12654,"dropout_rate":0.212,"avg_risk":25.4},"Male":{"n":12346,"dropout_rate":0.269,"avg_risk":32.4}},"by_caste":{"BC-A":{"n":5978,"dropout_rate":0.23,"avg_risk":31.4},"BC-B":{"n":2524,"dropout_rate":0.423,"avg_risk":28.4},"BC-C":{"n":13988,"dropout_rate":0.216,"avg_risk":28.6},"OC":{"n":2497,"dropout_rate":0.213,"avg_risk":24.6},"Other":{"n":13,"dropout_rate":0.0,"avg_risk":48.0}}}
+{
+  "n": 12430,
+  "dropouts": 4466,
+  "models": {
+    "logistic": {
+      "name": "Logistic (interpretable baseline)",
+      "roc_auc": 0.7259,
+      "pr_auc": 0.5826,
+      "top10": {
+        "k_pct": 0.1,
+        "n_selected": 1243,
+        "precision": 0.6895,
+        "recall": 0.1919,
+        "captured": 857,
+        "total_dropouts": 4466
+      },
+      "top20": {
+        "k_pct": 0.2,
+        "n_selected": 2486,
+        "precision": 0.6376,
+        "recall": 0.3549,
+        "captured": 1585,
+        "total_dropouts": 4466
+      },
+      "poc_top20": {
+        "threshold_percentile": 20,
+        "true_positive": 1585,
+        "false_positive": 901,
+        "true_negative": 7063,
+        "false_negative": 2881,
+        "inclusion_error": 0.3624,
+        "exclusion_error": 0.6451,
+        "inclusion_target": 0.8,
+        "exclusion_target": 0.2,
+        "inclusion_pass": true,
+        "exclusion_pass": false
+      }
+    },
+    "gbm": {
+      "name": "Gradient Boosting",
+      "roc_auc": 0.7467,
+      "pr_auc": 0.6097,
+      "top10": {
+        "k_pct": 0.1,
+        "n_selected": 1243,
+        "precision": 0.7168,
+        "recall": 0.1995,
+        "captured": 891,
+        "total_dropouts": 4466
+      },
+      "top20": {
+        "k_pct": 0.2,
+        "n_selected": 2486,
+        "precision": 0.6565,
+        "recall": 0.3654,
+        "captured": 1632,
+        "total_dropouts": 4466
+      },
+      "poc_top20": {
+        "threshold_percentile": 20,
+        "true_positive": 1632,
+        "false_positive": 854,
+        "true_negative": 7110,
+        "false_negative": 2834,
+        "inclusion_error": 0.3435,
+        "exclusion_error": 0.6346,
+        "inclusion_target": 0.8,
+        "exclusion_target": 0.2,
+        "inclusion_pass": true,
+        "exclusion_pass": false
+      }
+    },
+    "hyper_early": {
+      "name": "Hyper-early (weeks 1-8 only)",
+      "roc_auc": 0.6555,
+      "pr_auc": 0.4951,
+      "top10": {
+        "k_pct": 0.1,
+        "n_selected": 1243,
+        "precision": 0.5784,
+        "recall": 0.161,
+        "captured": 719,
+        "total_dropouts": 4466
+      },
+      "top20": {
+        "k_pct": 0.2,
+        "n_selected": 2486,
+        "precision": 0.5724,
+        "recall": 0.3186,
+        "captured": 1423,
+        "total_dropouts": 4466
+      },
+      "poc_top20": {
+        "threshold_percentile": 20,
+        "true_positive": 1423,
+        "false_positive": 1063,
+        "true_negative": 6901,
+        "false_negative": 3043,
+        "inclusion_error": 0.4276,
+        "exclusion_error": 0.6814,
+        "inclusion_target": 0.8,
+        "exclusion_target": 0.2,
+        "inclusion_pass": true,
+        "exclusion_pass": false
+      }
+    }
+  },
+  "by_gender": {
+    "Female": {
+      "n": 5567,
+      "dropout_rate": 0.338,
+      "avg_risk": 44.7
+    },
+    "Male": {
+      "n": 6863,
+      "dropout_rate": 0.376,
+      "avg_risk": 49.7
+    }
+  },
+  "by_caste": {
+    "BC-C": {
+      "n": 6920,
+      "dropout_rate": 0.328,
+      "avg_risk": 47.0
+    },
+    "BC-B": {
+      "n": 1184,
+      "dropout_rate": 0.581,
+      "avg_risk": 50.3
+    },
+    "BC-A": {
+      "n": 3277,
+      "dropout_rate": 0.34,
+      "avg_risk": 48.3
+    },
+    "OC": {
+      "n": 1040,
+      "dropout_rate": 0.383,
+      "avg_risk": 44.7
+    },
+    "Other": {
+      "n": 9,
+      "dropout_rate": 0.0,
+      "avg_risk": 63.9
+    }
+  },
+  "by_district_top_overflag": [
+    [
+      "KURNOOL",
+      3.8571554252199416
+    ],
+    [
+      "NANDYAL",
+      2.3346969696969695
+    ],
+    [
+      "SRI SATYASAI",
+      1.9811570247933885
+    ],
+    [
+      "ANANTAPUR",
+      1.8260728744939272
+    ],
+    [
+      "SRIKAKULAM",
+      1.7629787234042553
+    ]
+  ],
+  "feature_importance_gbm": {
+    "attendance_pct": 0.3243963192358998,
+    "syn::behavioural_disengagement": 0.10754112474181536,
+    "syn::financial_stress": 0.07716648335837421,
+    "fa_avg": 0.06543332168599333,
+    "attendance_delta_30d": 0.0579509532286851,
+    "syn::parent_engagement_low": 0.04902074266527312,
+    "marks_trend": 0.04763778616000787,
+    "syn::seasonal_migration_possibility": 0.04550037282550509,
+    "syn::peer_isolation": 0.030925854084553207,
+    "absent_days": 0.02947907847637639
+  },
+  "logistic_coefficients": {
+    "attendance_pct": -0.404,
+    "recent_attendance_pct": -0.225,
+    "attendance_delta_30d": 0.133,
+    "longest_absence_streak": -0.029,
+    "repeated_absence_clusters": 0.264,
+    "absent_days": -0.382,
+    "fa_avg": 0.102,
+    "sa_avg": -0.166,
+    "overall_marks": -0.028,
+    "marks_trend": 0.241,
+    "syn::seasonal_migration_possibility": 0.207,
+    "syn::financial_stress": 0.258,
+    "syn::child_labour_concern": 0.162,
+    "syn::early_marriage_concern": 0.142,
+    "syn::behavioural_disengagement": 0.316,
+    "syn::transport_difficulty": 0.14,
+    "syn::peer_isolation": 0.166,
+    "syn::parent_engagement_low": 0.208
+  }
+}

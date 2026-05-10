@@ -1,0 +1,132 @@
+[
+  {
+    "district": "MANYAM",
+    "file": "bundles/manyam.json",
+    "count": 141
+  },
+  {
+    "district": "ASR",
+    "file": "bundles/asr.json",
+    "count": 262
+  },
+  {
+    "district": "GUNTUR",
+    "file": "bundles/guntur.json",
+    "count": 195
+  },
+  {
+    "district": "KAKINADA",
+    "file": "bundles/kakinada.json",
+    "count": 439
+  },
+  {
+    "district": "KADAPA",
+    "file": "bundles/kadapa.json",
+    "count": 734
+  },
+  {
+    "district": "ANNAMAYYA",
+    "file": "bundles/annamayya.json",
+    "count": 635
+  },
+  {
+    "district": "EAST GODAVARI",
+    "file": "bundles/east_godavari.json",
+    "count": 405
+  },
+  {
+    "district": "KONASEEMA",
+    "file": "bundles/konaseema.json",
+    "count": 303
+  },
+  {
+    "district": "KURNOOL",
+    "file": "bundles/kurnool.json",
+    "count": 2621
+  },
+  {
+    "district": "ANANTAPUR",
+    "file": "bundles/anantapur.json",
+    "count": 1017
+  },
+  {
+    "district": "TIRUPATI",
+    "file": "bundles/tirupati.json",
+    "count": 413
+  },
+  {
+    "district": "PRAKASAM",
+    "file": "bundles/prakasam.json",
+    "count": 371
+  },
+  {
+    "district": "VISAKHAPATNAM",
+    "file": "bundles/visakhapatnam.json",
+    "count": 250
+  },
+  {
+    "district": "NELLORE",
+    "file": "bundles/nellore.json",
+    "count": 311
+  },
+  {
+    "district": "SRIKAKULAM",
+    "file": "bundles/srikakulam.json",
+    "count": 205
+  },
+  {
+    "district": "NANDYAL",
+    "file": "bundles/nandyal.json",
+    "count": 1253
+  },
+  {
+    "district": "VIZIANAGARAM",
+    "file": "bundles/vizianagaram.json",
+    "count": 230
+  },
+  {
+    "district": "SRI SATYASAI",
+    "file": "bundles/sri_satyasai.json",
+    "count": 569
+  },
+  {
+    "district": "ELURU",
+    "file": "bundles/eluru.json",
+    "count": 313
+  },
+  {
+    "district": "CHITTOOR",
+    "file": "bundles/chittoor.json",
+    "count": 408
+  },
+  {
+    "district": "ANAKAPALLI",
+    "file": "bundles/anakapalli.json",
+    "count": 205
+  },
+  {
+    "district": "NTR",
+    "file": "bundles/ntr.json",
+    "count": 318
+  },
+  {
+    "district": "WEST GODAVARI",
+    "file": "bundles/west_godavari.json",
+    "count": 228
+  },
+  {
+    "district": "KRISHNA",
+    "file": "bundles/krishna.json",
+    "count": 248
+  },
+  {
+    "district": "PALNADU",
+    "file": "bundles/palnadu.json",
+    "count": 241
+  },
+  {
+    "district": "BAPATLA",
+    "file": "bundles/bapatla.json",
+    "count": 115
+  }
+]

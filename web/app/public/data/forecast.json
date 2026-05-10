@@ -1,0 +1,492 @@
+{
+  "districts": [
+    {
+      "district": "KURNOOL",
+      "series_weekly_high_risk": [
+        1450,
+        1516,
+        1524,
+        1533
+      ],
+      "projection_30d": 1728,
+      "projection_60d": 1886,
+      "slope_per_week": 39.52,
+      "deteriorating": true
+    },
+    {
+      "district": "KAKINADA",
+      "series_weekly_high_risk": [
+        174,
+        196,
+        195,
+        214
+      ],
+      "projection_30d": 280,
+      "projection_60d": 342,
+      "slope_per_week": 15.42,
+      "deteriorating": true
+    },
+    {
+      "district": "KRISHNA",
+      "series_weekly_high_risk": [
+        128,
+        152,
+        133,
+        146
+      ],
+      "projection_30d": 200,
+      "projection_60d": 242,
+      "slope_per_week": 10.62,
+      "deteriorating": true
+    },
+    {
+      "district": "SRIKAKULAM",
+      "series_weekly_high_risk": [
+        57,
+        66,
+        73,
+        72
+      ],
+      "projection_30d": 103,
+      "projection_60d": 129,
+      "slope_per_week": 6.48,
+      "deteriorating": true
+    },
+    {
+      "district": "TIRUPATI",
+      "series_weekly_high_risk": [
+        222,
+        239,
+        216,
+        229
+      ],
+      "projection_30d": 260,
+      "projection_60d": 283,
+      "slope_per_week": 5.8,
+      "deteriorating": true
+    },
+    {
+      "district": "ASR",
+      "series_weekly_high_risk": [
+        117,
+        129,
+        112,
+        124
+      ],
+      "projection_30d": 146,
+      "projection_60d": 164,
+      "slope_per_week": 4.46,
+      "deteriorating": true
+    },
+    {
+      "district": "NELLORE",
+      "series_weekly_high_risk": [
+        166,
+        171,
+        170,
+        176
+      ],
+      "projection_30d": 190,
+      "projection_60d": 205,
+      "slope_per_week": 3.64,
+      "deteriorating": true
+    },
+    {
+      "district": "PALNADU",
+      "series_weekly_high_risk": [
+        122,
+        128,
+        130,
+        127
+      ],
+      "projection_30d": 144,
+      "projection_60d": 157,
+      "slope_per_week": 3.16,
+      "deteriorating": true
+    },
+    {
+      "district": "ANNAMAYYA",
+      "series_weekly_high_risk": [
+        297,
+        293,
+        321,
+        311
+      ],
+      "projection_30d": 321,
+      "projection_60d": 334,
+      "slope_per_week": 3.12,
+      "deteriorating": true
+    },
+    {
+      "district": "CHITTOOR",
+      "series_weekly_high_risk": [
+        156,
+        160,
+        164,
+        160
+      ],
+      "projection_30d": 173,
+      "projection_60d": 183,
+      "slope_per_week": 2.4,
+      "deteriorating": true
+    },
+    {
+      "district": "GUNTUR",
+      "series_weekly_high_risk": [
+        96,
+        97,
+        99,
+        102
+      ],
+      "projection_30d": 107,
+      "projection_60d": 114,
+      "slope_per_week": 1.66,
+      "deteriorating": true
+    },
+    {
+      "district": "BAPATLA",
+      "series_weekly_high_risk": [
+        60,
+        63,
+        63,
+        58
+      ],
+      "projection_30d": 64,
+      "projection_60d": 67,
+      "slope_per_week": 0.62,
+      "deteriorating": false
+    },
+    {
+      "district": "KONASEEMA",
+      "series_weekly_high_risk": [
+        156,
+        155,
+        152,
+        160
+      ],
+      "projection_30d": 156,
+      "projection_60d": 158,
+      "slope_per_week": 0.28,
+      "deteriorating": false
+    },
+    {
+      "district": "SRI SATYASAI",
+      "series_weekly_high_risk": [
+        247,
+        247,
+        259,
+        242
+      ],
+      "projection_30d": 247,
+      "projection_60d": 246,
+      "slope_per_week": -0.28,
+      "deteriorating": false
+    },
+    {
+      "district": "NTR",
+      "series_weekly_high_risk": [
+        205,
+        197,
+        207,
+        205
+      ],
+      "projection_30d": 190,
+      "projection_60d": 182,
+      "slope_per_week": -2.12,
+      "deteriorating": false
+    },
+    {
+      "district": "VISAKHAPATNAM",
+      "series_weekly_high_risk": [
+        131,
+        132,
+        121,
+        118
+      ],
+      "projection_30d": 110,
+      "projection_60d": 98,
+      "slope_per_week": -2.92,
+      "deteriorating": false
+    },
+    {
+      "district": "VIZIANAGARAM",
+      "series_weekly_high_risk": [
+        93,
+        86,
+        83,
+        87
+      ],
+      "projection_30d": 65,
+      "projection_60d": 50,
+      "slope_per_week": -3.76,
+      "deteriorating": false
+    },
+    {
+      "district": "PRAKASAM",
+      "series_weekly_high_risk": [
+        234,
+        231,
+        214,
+        225
+      ],
+      "projection_30d": 204,
+      "projection_60d": 189,
+      "slope_per_week": -3.84,
+      "deteriorating": false
+    },
+    {
+      "district": "EAST GODAVARI",
+      "series_weekly_high_risk": [
+        250,
+        248,
+        242,
+        234
+      ],
+      "projection_30d": 220,
+      "projection_60d": 203,
+      "slope_per_week": -4.24,
+      "deteriorating": false
+    },
+    {
+      "district": "ELURU",
+      "series_weekly_high_risk": [
+        204,
+        194,
+        193,
+        196
+      ],
+      "projection_30d": 167,
+      "projection_60d": 147,
+      "slope_per_week": -5.06,
+      "deteriorating": false
+    },
+    {
+      "district": "KADAPA",
+      "series_weekly_high_risk": [
+        379,
+        370,
+        375,
+        366
+      ],
+      "projection_30d": 342,
+      "projection_60d": 321,
+      "slope_per_week": -5.36,
+      "deteriorating": false
+    },
+    {
+      "district": "ANAKAPALLI",
+      "series_weekly_high_risk": [
+        113,
+        103,
+        104,
+        99
+      ],
+      "projection_30d": 70,
+      "projection_60d": 45,
+      "slope_per_week": -6.14,
+      "deteriorating": false
+    },
+    {
+      "district": "MANYAM",
+      "series_weekly_high_risk": [
+        76,
+        68,
+        60,
+        57
+      ],
+      "projection_30d": 26,
+      "projection_60d": 0,
+      "slope_per_week": -7.0,
+      "deteriorating": false
+    },
+    {
+      "district": "WEST GODAVARI",
+      "series_weekly_high_risk": [
+        152,
+        139,
+        142,
+        134
+      ],
+      "projection_30d": 97,
+      "projection_60d": 66,
+      "slope_per_week": -7.84,
+      "deteriorating": false
+    },
+    {
+      "district": "ANANTAPUR",
+      "series_weekly_high_risk": [
+        473,
+        456,
+        458,
+        462
+      ],
+      "projection_30d": 417,
+      "projection_60d": 385,
+      "slope_per_week": -7.86,
+      "deteriorating": false
+    },
+    {
+      "district": "NANDYAL",
+      "series_weekly_high_risk": [
+        705,
+        647,
+        676,
+        687
+      ],
+      "projection_30d": 553,
+      "projection_60d": 466,
+      "slope_per_week": -21.58,
+      "deteriorating": false
+    }
+  ],
+  "top_deteriorating": [
+    {
+      "district": "KURNOOL",
+      "series_weekly_high_risk": [
+        1450,
+        1516,
+        1524,
+        1533
+      ],
+      "projection_30d": 1728,
+      "projection_60d": 1886,
+      "slope_per_week": 39.52,
+      "deteriorating": true
+    },
+    {
+      "district": "KAKINADA",
+      "series_weekly_high_risk": [
+        174,
+        196,
+        195,
+        214
+      ],
+      "projection_30d": 280,
+      "projection_60d": 342,
+      "slope_per_week": 15.42,
+      "deteriorating": true
+    },
+    {
+      "district": "KRISHNA",
+      "series_weekly_high_risk": [
+        128,
+        152,
+        133,
+        146
+      ],
+      "projection_30d": 200,
+      "projection_60d": 242,
+      "slope_per_week": 10.62,
+      "deteriorating": true
+    },
+    {
+      "district": "SRIKAKULAM",
+      "series_weekly_high_risk": [
+        57,
+        66,
+        73,
+        72
+      ],
+      "projection_30d": 103,
+      "projection_60d": 129,
+      "slope_per_week": 6.48,
+      "deteriorating": true
+    },
+    {
+      "district": "TIRUPATI",
+      "series_weekly_high_risk": [
+        222,
+        239,
+        216,
+        229
+      ],
+      "projection_30d": 260,
+      "projection_60d": 283,
+      "slope_per_week": 5.8,
+      "deteriorating": true
+    },
+    {
+      "district": "ASR",
+      "series_weekly_high_risk": [
+        117,
+        129,
+        112,
+        124
+      ],
+      "projection_30d": 146,
+      "projection_60d": 164,
+      "slope_per_week": 4.46,
+      "deteriorating": true
+    },
+    {
+      "district": "NELLORE",
+      "series_weekly_high_risk": [
+        166,
+        171,
+        170,
+        176
+      ],
+      "projection_30d": 190,
+      "projection_60d": 205,
+      "slope_per_week": 3.64,
+      "deteriorating": true
+    },
+    {
+      "district": "PALNADU",
+      "series_weekly_high_risk": [
+        122,
+        128,
+        130,
+        127
+      ],
+      "projection_30d": 144,
+      "projection_60d": 157,
+      "slope_per_week": 3.16,
+      "deteriorating": true
+    },
+    {
+      "district": "ANNAMAYYA",
+      "series_weekly_high_risk": [
+        297,
+        293,
+        321,
+        311
+      ],
+      "projection_30d": 321,
+      "projection_60d": 334,
+      "slope_per_week": 3.12,
+      "deteriorating": true
+    },
+    {
+      "district": "CHITTOOR",
+      "series_weekly_high_risk": [
+        156,
+        160,
+        164,
+        160
+      ],
+      "projection_30d": 173,
+      "projection_60d": 183,
+      "slope_per_week": 2.4,
+      "deteriorating": true
+    },
+    {
+      "district": "GUNTUR",
+      "series_weekly_high_risk": [
+        96,
+        97,
+        99,
+        102
+      ],
+      "projection_30d": 107,
+      "projection_60d": 114,
+      "slope_per_week": 1.66,
+      "deteriorating": true
+    }
+  ],
+  "method": "Holt linear (level + trend), alpha=0.5 beta=0.4",
+  "horizon_days": [
+    30,
+    60
+  ]
+}
