@@ -1,0 +1,25 @@
+# Source data — large CSVs are not committed (download separately from the hackathon drive)
+data_FIN_YEAR_*.csv
+
+# Build artefacts
+web/app/node_modules/
+web/app/dist/
+web/app/.vite/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Local task notes
+.claude/
