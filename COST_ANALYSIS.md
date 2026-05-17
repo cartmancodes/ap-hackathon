@@ -206,6 +206,34 @@ Egress pricing (internet, Mumbai / Central India):
   removes the egress line item entirely — the cloud job only writes artefacts
   that a static host serves.
 
+### 5.4 Egress mitigation playbook (for >60 GB billable)
+
+The output is **100% static, identical for every user, and changes once/week** —
+so the bytes are almost infinitely cacheable. Levers, highest leverage first:
+
+| # | Lever | Effect | Effort |
+|---|---|---|---|
+| 1 | **Free-egress static host** (Cloudflare Pages / Cloudflare proxy) — app is static Vite + JSON | Egress → **$0 at any scale** | Low |
+| 2 | **CDN always-free tier** (CloudFront 1 TB/mo free; cache-hit ≈ 99.99% so origin egress ≈ $0) | Light rollout → **$0**; heavy → ~$110–170 | Low |
+| 3 | **Zero-egress object store** (Cloudflare R2 / Backblaze B2, S3-compatible) | Egress → **$0**; pay storage/ops only | Low–Med |
+| 4 | **Scope payload to jurisdiction** + per-district lazy-load (teacher needs ~10 students, not 500K) | ~15× smaller/session | Med (in rebuild) |
+| 5 | **Brotli + columnar encoding** (array-of-arrays / MessagePack vs array-of-objects) | ~2–3× smaller again | Med |
+| 6 | **Weekly-immutable caching** (`max-age=604800, immutable` + versioned URLs + ETag/304) | Repeat visits/week → **0 bytes** | Low |
+
+**Recomputed cost for the >60 GB scenarios:**
+
+| Scenario | Direct S3 | + CloudFront (1 TB free) | + R2 / CF Pages |
+|---|---|---|---|
+| State rollout light (160 GB) | ~$6.5/mo | **$0** | **$0** |
+| State rollout heavy (2 TB) | ~$207/mo | ~$110–170/mo | **~$0** (storage/ops only) |
+| Heavy + scoped lazy-load + brotli (~0.8–1 TB) | ~$98/mo | **$0** | **~$0** |
+
+**Recommended stack:** Cloudflare Pages (or Cloudflare + R2) for the static
+bundle, brotli-compressed, scoped per-district lazy-load, weekly-immutable cache
+headers → egress **effectively $0 even at state scale**. If AWS is mandated:
+**CloudFront in front of S3** ($0 at light scale via the 1 TB free tier; ~$0 at
+heavy scale once scoped lazy-load + brotli bring traffic under 1 TB).
+
 ---
 
 ## 6. Bottom line
